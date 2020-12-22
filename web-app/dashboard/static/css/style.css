@@ -5,9 +5,13 @@
 }
 
 .dummy-charts {
-    height: 200px;
+    height: 250px;
 }
 
 .chart-titles {
     text-align: center;
+}
+
+.left-m {
+    margin-left: 25px;
 }
