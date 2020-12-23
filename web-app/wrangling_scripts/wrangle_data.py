@@ -67,5 +67,7 @@ def return_figures():
     figures = []
     figures.append(dict(data = graph_one, layout = layout_one))
     figures.append(dict(data = graph_two, layout = layout_two))
+    figures.append(dict(data = graph_two, layout = layout_two))
+    figures.append(dict(data = graph_two, layout = layout_two))
 
     return figures
