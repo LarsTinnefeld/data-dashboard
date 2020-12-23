@@ -26,10 +26,8 @@ def return_figures():
 
     graph_one = []
     df_daily = daily_gen_grouping('data/Plant_1_Generation_Data.csv')
-
     x_val = df_daily['date']
     y_val = df_daily['DC_POWER']
-
     graph_one.append(
         go.Scatter(
             x = x_val,
@@ -38,9 +36,28 @@ def return_figures():
             name = 'DC_POWER'
         )
     )
-
     layout_one = dict(
-        title = 'Daily summarized DC Power generation',
+        title = 'Daily DC Power generation plant 1',
+        xaxis = dict(
+            title = 'Timeline',
+            autoticks = False
+            )
+        )
+
+    graph_two = []
+    df_daily = daily_gen_grouping('data/Plant_2_Generation_Data.csv')
+    x_val = df_daily['date']
+    y_val = df_daily['DC_POWER']
+    graph_two.append(
+        go.Scatter(
+            x = x_val,
+            y = y_val,
+            mode = 'lines',
+            name = 'DC_POWER'
+        )
+    )
+    layout_two = dict(
+        title = 'Daily DC Power generation plant 2',
         xaxis = dict(
             title = 'Timeline',
             autoticks = False
@@ -49,5 +66,6 @@ def return_figures():
 
     figures = []
     figures.append(dict(data = graph_one, layout = layout_one))
+    figures.append(dict(data = graph_two, layout = layout_two))
 
     return figures
