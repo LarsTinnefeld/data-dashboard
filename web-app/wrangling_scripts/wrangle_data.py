@@ -3,9 +3,15 @@ import pandas as pd
 import datetime as dt
 import plotly.graph_objs as go
 
-# Data import procedure
 
 def import_gen(dataset):
+    '''
+    Function to import csv data into a Pandas Dataframe
+
+    Input: csv file
+
+    Output: Pandas Dataframe
+    '''
     
     df = pd.read_csv(dataset) # Import data
     df['DATE_TIME'] = pd.to_datetime(df['DATE_TIME']) # Set date format
@@ -15,15 +21,33 @@ def import_gen(dataset):
 
 
 def daily_gen_grouping(dataset):
+    '''
+    Function to group by days
 
+    Input: Pandas Dataframe
+
+    Output: New Pandas Dataframe
+    '''
     df = import_gen(dataset)
-    df_daily = df.groupby('date').agg({'DC_POWER': 'sum', 'AC_POWER': 'sum', 'DAILY_YIELD': 'max'}).reset_index()
+    df_daily = df.groupby('date').agg({
+        'DC_POWER': 'sum',
+        'AC_POWER': 'sum',
+        'DAILY_YIELD': 'max'
+        }).reset_index()
 
     return df_daily
 
 
 def return_figures():
+    '''
+    Function to generate data for visualizations
 
+    Input: None
+
+    Output: List with visualization data ("Figures")
+    '''
+
+    # Chart One
     graph_one = []
     df_daily = daily_gen_grouping('data/Plant_1_Generation_Data.csv')
     x_val = df_daily['date']
@@ -44,6 +68,7 @@ def return_figures():
             )
         )
 
+    # Chart Two
     graph_two = []
     df_daily = daily_gen_grouping('data/Plant_2_Generation_Data.csv')
     x_val = df_daily['date']
@@ -64,6 +89,7 @@ def return_figures():
             )
         )
 
+    # Chart Three
     graph_three = []
     df = import_gen('data/Plant_1_Weather_Sensor_Data.csv')
     df_may_25 = df.loc[df.date == pd.to_datetime('2020-05-25')][['IRRADIATION', 'DATE_TIME']]
@@ -94,6 +120,7 @@ def return_figures():
             )
         )
 
+    # Chart Four
     graph_four = []
     df_x = daily_gen_grouping('data/Plant_1_Generation_Data.csv')
     df_y = daily_gen_grouping('data/Plant_2_Generation_Data.csv')
@@ -116,6 +143,7 @@ def return_figures():
         title = 'DC Power comparison'
         )
 
+    # Gathering visualization data
     figures = []
     figures.append(dict(data = graph_one, layout = layout_one))
     figures.append(dict(data = graph_two, layout = layout_two))
